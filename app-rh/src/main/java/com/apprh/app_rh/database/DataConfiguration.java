@@ -15,12 +15,12 @@ public class DataConfiguration {
     @Bean
     public DataSource dataSource() {
         /*
-         * modificar conforme host?
+         * modificar conforme servidor
          */
         String driverClassName = "com.mysql.cj.jdbc.Driver"; //driver MySQL
         String databaseUrl = "jdbc:mysql://localhost/apprh?useTimezone=true&Timezone=UTC"; //database URL
         String user = "root"; //usuário MySQL
-        String password = "password"; //senha 
+        String password = ""; //senha 
         /*
          * 
          */

@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
 
+@Entity
 public class Vaga implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -30,42 +31,58 @@ public class Vaga implements Serializable {
     private String salario;
 
     @OneToMany(mappedBy = "vaga", cascade = CascadeType.REMOVE) //relação UM-PARA-MUITOS entre tabela "Vaga" e "Candidato". Remove os "Candidato" caso a vaga seja excluída
-    private List<Candidato>candidatos; 
+    private List<Candidato>candidatos;
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    public long getCodigo() {
+        return codigo;
+    }
 
     public void setCodigo(long codigo) {
         this.codigo = codigo;
     }
-    public long getCodigo() {
-        return codigo;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+
     public String getNome() {
         return nome;
     }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
+
     public String getDescricao() {
         return descricao;
     }
-    public void setData(String data) {
-        this.data = data;
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
+
     public String getData() {
         return data;
     }
-    public void setSalario(String salario) {
-        this.salario = salario;
+
+    public void setData(String data) {
+        this.data = data;
     }
+
     public String getSalario() {
         return salario;
     }
-    public void setCandidatos(List<Candidato> candidatos) {
-        this.candidatos = candidatos;
+
+    public void setSalario(String salario) {
+        this.salario = salario;
     }
+
     public List<Candidato> getCandidatos() {
         return candidatos;
     }
+
+    public void setCandidatos(List<Candidato> candidatos) {
+        this.candidatos = candidatos;
+    } 
+
 }

@@ -59,4 +59,29 @@ public class VagaController {
         modelAndView.addObject("candidatos", candidatos);
         return modelAndView;
     }
+
+    public String detalhesVagaPost(@PathVariable("codigo") long codigo, @Valid Candidato candidato, BindingResult result, RedirectAttributes attributes) {
+        if (result.hasErrors()) {
+            attributes.addFlashAttribute("mensagem", "Verifique os campos...");
+            return "redirect:/{codigo}";
+        }
+        if (candidatoRepository.findByRg(candidato.getRg()) != null) {
+            attributes.addFlashAttribute("mensagem", "RG duplicado!");
+            return "redirect:/{codigo}";
+        }
+        Vaga vaga = vagaRepository.findByCodigo(codigo);
+        candidato.setVaga(vaga);
+        candidatoRepository.save(candidato);
+        attributes.addFlashAttribute("mensagem", "Candidato adicionado com sucesso!");
+        return "redirect:/{codigo}";
+    }
+
+    @RequestMapping(value="deletarVaga")
+    public String deletarVaga(long codigo) {
+        Vaga vaga = vagaRepository.findByCodigo(codigo);
+        vagaRepository.delete(vaga);
+        return "redirect:/vagas";
+    }
+
+    // a implementar: "deleta candidato"
 }

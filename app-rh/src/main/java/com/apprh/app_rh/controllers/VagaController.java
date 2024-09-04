@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class VagaController {
     @Autowired
-    private VagaRepository vr;
+    private VagaRepository vagaRepository;
 
     @Autowired
-    private CandidatoRepository cr;
+    private CandidatoRepository candidatoRepository;
 
     @RequestMapping(value = "/cadastrarVaga", method=RequestMethod.GET)
     public String form() {
-        return "vaga/cadastrarVaga";
+        return "vaga/formVaga";
     }
     
     @RequestMapping(value="/cadastarVaga", method=RequestMethod.POST)
@@ -36,7 +36,8 @@ public class VagaController {
             attributes.addFlashAttribute("mensagem", "Verifique os campos...");
             return "redirect:/cadastrarVaga";
         }
-        vr.save(vaga);
+        vagaRepository.save(vaga);
+        attributes.addFlashAttribute("mensagem", "Vaga cadastrada com sucesso!");
         return "redirect:/cadastrarVaga";
     }
 }

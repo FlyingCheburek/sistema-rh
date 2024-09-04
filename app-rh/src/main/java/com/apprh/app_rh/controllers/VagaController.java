@@ -83,5 +83,29 @@ public class VagaController {
         return "redirect:/vagas";
     }
 
-    // a implementar: "deleta candidato"
+    @RequestMapping(value="/deletarCandidato")
+    public String deletarCandidato(String rg) {
+        Candidato candidato = candidatoRepository.findByRg(rg);
+        Vaga vaga = candidato.getVaga();
+        String codigo = "" + vaga.getCodigo();
+        candidatoRepository.delete(candidato);
+        return "redirect:/" + codigo;
+    }
+
+    @RequestMapping(value="/editarVaga", method=RequestMethod.GET)
+    public ModelAndView editarVaga(long codigo) {
+        Vaga vaga = vagaRepository.findByCodigo(codigo);
+        ModelAndView modelAndView = new ModelAndView("vaga/updateVaga");
+        modelAndView.addObject("vaga", vaga);
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/editarVaga", method=RequestMethod.POST)
+    public String updateVaga(@Valid Vaga vaga, BindingResult result, RedirectAttributes attributes) {
+        vagaRepository.save(vaga);
+        attributes.addFlashAttribute("success", "Vaga alterada com sucesso!");
+        long codigoLong = vaga.getCodigo();
+        String codigo = "" + codigoLong;
+        return "redirect:/" + codigo;
+    }
 }
